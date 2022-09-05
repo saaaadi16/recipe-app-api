@@ -3,7 +3,7 @@ Sample Tests
 """
 
 from django.test import SimpleTestCase
-from rest_framework.test import APIClient
+# from rest_framework.test import APIClient
 from app import calc
 
 
