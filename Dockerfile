@@ -9,20 +9,25 @@ ENV PYTHONBUFFERED 1
 
 # Copy files to tmp
 COPY ./requirements.txt /tmp/requirements.txt
+COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./app /app
 
 # Working directly, default directory
 WORKDIR /app
 EXPOSE 8000
 
+ARG DEV=false
 RUN python -m venv /py && \
   /py/bin/pip install  --upgrade pip && \
   /py/bin/pip install -r /tmp/requirements.txt && \
+  if [ $DEV = "true"]; \
+	then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
+  fi && \
   rm -rf /tmp && \
   adduser \
-  --disabled-password \
-  --no-create-home \
-  django-user
+	  --disabled-password \
+	  --no-create-home \
+	  django-user
 
 # Updated ENV var inside the image
 # Updating PATH created on linux operating systems
