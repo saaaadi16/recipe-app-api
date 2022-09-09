@@ -1,6 +1,5 @@
 # URL mappings for the user API.
 
-import email
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -34,7 +33,7 @@ class PublicUserApiTests(TestCase):
         res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        user = get_user_model().objects.get(email=payload['email'])
+        user = get_user_model().objects.get(email=payload['email'])  # noqa
         # self.assertTrue(user.check_password(not payload['password']))
         self.assertNotIn('password', res.data)
 
